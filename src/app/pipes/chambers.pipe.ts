@@ -7,9 +7,9 @@ export class ChambersPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
     if ( value === 'house') {
-      return 'House'
+      return 'House';
     } else {
-      return 'Senate'
+      return 'Senate';
     }
   }
 

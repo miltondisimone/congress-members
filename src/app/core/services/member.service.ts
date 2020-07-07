@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MemberService {
   }
 
 
-  getAllCongressMember(congress: string, chamber: number): Observable<any> {
+  getCongressMembersByCongressAndChamber(congress: string, chamber: number): Observable<any> {
     const resourceUrl = `https://api.propublica.org/congress/v1/${congress}/${chamber}/members.json`;
 
     const options = {
@@ -22,11 +23,12 @@ export class MemberService {
       }),
     };
 
-    return this.http.get(resourceUrl, options);
+    return this.http.get(resourceUrl, options).pipe(map( (resp: any) => {
+      return resp.results[0].members;
+    }));
   }
 
   generateCongressNumberList(chamber: string) {
-    console.log(chamber)
     let congressList = [];
     let minCongressNumber;
 

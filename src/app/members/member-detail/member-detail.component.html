@@ -1,1 +1,6 @@
-<p>member-detail works!</p>
+<div class="member-detail">
+    <div class="row member-att" *ngFor="let memberAtt of member | keyvalue">
+        <div class="title col-3">{{ memberEnum[memberAtt.key]}}:</div>
+        <div class="value col-9">{{memberAtt.value ? memberAtt.value : '-'}}</div>
+    </div>
+</div>

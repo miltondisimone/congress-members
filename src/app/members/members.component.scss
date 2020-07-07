@@ -1,0 +1,24 @@
+.members {
+    .table-wrapper {
+        overflow-x: scroll;
+        .members-table {
+            thead,
+            tbody {
+                tr {
+                    th,
+                    td {
+                        min-width: 200px;
+                        &:last-child {
+                            min-width: 100px;
+                            background-color: white;
+                            width: 1%;
+                            position: sticky;
+                            top: 0;
+                            right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

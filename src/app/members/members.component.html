@@ -1,14 +1,54 @@
-<form [formGroup]="requestForm">
-    <div class="form-group">
-        <label for="chamber_field">Chamber</label>
-        <select class="form-control" id="chamber_field" formControlName="chamber" name="chamber_field" (change)="selectChamber()">
-          <option *ngFor="let chamb of chambers" [value]="chamb">{{ chamb | chambers }}</option>
-        </select>
+<div class="members container">
+    <form [formGroup]="requestForm" class="row">
+        <div class="form-group" class="col-6">
+            <label for="chamber_field">Chamber</label>
+            <select class="form-control" id="chamber_field" formControlName="chamber" name="chamber_field" (change)="selectChamber()">
+              <option *ngFor="let chamb of chambers" [value]="chamb">{{ chamb | chambers }}</option>
+            </select>
+        </div>
+        <div class="form-group" class="col-6">
+            <label for="congress_field">Congress</label>
+            <select class="form-control" id="congress_field" name="chamber_field" formControlName="congress" (change)="getMembers()">
+              <option *ngFor="let congress of congressList">{{congress}}</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="filters">
+        <p>Filter <i class="arrow"></i></p>
     </div>
-    <div class="form-group">
-        <label for="congress_field">Congress</label>
-        <select class="form-control" id="congress_field" name="chamber_field" formControlName="congress">
-          <option *ngFor="let congress of congressList">{{congress}}</option>
-        </select>
+
+
+
+    <div class="table-wrapper">
+        <!-- Members Table -->
+        <table class="table members-table mt-4">
+            <thead>
+                <tr>
+                    <th *ngFor="let memberField of memberEnum | keyvalue" scope="col">
+                        {{memberField.value}}
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let member of members">
+                    <td *ngFor="let memberAtt of member | keyvalue">
+                        {{memberAtt.value ? memberAtt.value : '-'}}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="button" class="btn btn-info btn-sm" (click)="openDetailsModal(member)">
+                                <span class="d-none d-md-inline">Details</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</form>
+    <div class="d-flex justify-content-between p-2 container">
+        <ngb-pagination class="m-auto" [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChange()">
+        </ngb-pagination>
+    </div>
+</div>

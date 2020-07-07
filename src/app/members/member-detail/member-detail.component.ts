@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MemberEnum } from 'src/app/utils/member-enum';
 
 @Component({
   selector: 'app-member-detail',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./member-detail.component.scss']
 })
 export class MemberDetailComponent implements OnInit {
+
+  @Input() member;
+  memberEnum = MemberEnum;
 
   constructor() { }
 
