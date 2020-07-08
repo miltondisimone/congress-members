@@ -82,7 +82,7 @@ export class MembersComponent implements OnInit {
 
       if (this.filters.advanced && this.showAdvancedFilters) {
         this.members = this.paginateMembers(
-          this.allMembers.filter(member => String(member[this.advancedFilter]).includes(this.filters.advanced)
+          this.allMembers.filter(member => String(member[this.advancedFilter]).includes(this.filters.advanced),
         ));
       } else {
         this.members = this.paginateMembers(this.allMembers.filter(member => String(Object.values(member)).includes(this.filters.global) ));

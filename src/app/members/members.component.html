@@ -80,7 +80,7 @@
             No results found
         </h2>
     </div>
-    <div class="d-flex justify-content-between p-2 container" *ngIf="members && members.length && !isLoading">
+    <div class="d-flex justify-content-between p-2 container pagination" *ngIf="members && members.length && !isLoading">
         <ngb-pagination class="m-auto" [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChange()" [size]="'sm'">
         </ngb-pagination>
     </div>

@@ -19,6 +19,5 @@ import { RouterModule } from '@angular/router';
     NgbModule,
     RouterModule
   ],
-  entryComponents: [MemberDetailComponent]
 })
 export class MembersModule { }
