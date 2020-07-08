@@ -14,8 +14,11 @@
         </div>
     </form>
 
-    <div class="filters">
-        <p>Filter <i class="arrow"></i></p>
+    <div class="filters row">
+        <div class="form-group col-4">
+            <label for="global_filter">Filter</label>
+            <input [(ngModel)]="filters.global" (input)="filterData()" type="text" class="form-control" id="global_filter" placeholder="">
+        </div>
     </div>
 
 

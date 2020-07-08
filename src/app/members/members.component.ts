@@ -5,6 +5,7 @@ import { Member } from '../core/models/member.model';
 import { MemberEnum } from '../utils/member-enum';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MemberDetailComponent } from './member-detail/member-detail.component';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-members',
@@ -21,7 +22,8 @@ export class MembersComponent implements OnInit {
   pageSize = 7;
   collectionSize;
   members: Member[];
-  membersResp;
+  allMembers;
+  filters: any = {};
 
 
   constructor(private memberService: MemberService, private modalService: NgbModal) { }
@@ -46,7 +48,7 @@ export class MembersComponent implements OnInit {
   }
 
   pageChange() {
-    this.members = this.paginateMembers(this.membersResp);
+    this.members = this.paginateMembers(this.allMembers);
   }
 
 
@@ -59,9 +61,19 @@ export class MembersComponent implements OnInit {
     const chamber = this.requestForm.get('chamber').value;
 
     this.memberService.getCongressMembersByCongressAndChamber(congressNumber, chamber).subscribe(membersResp => {
-      this.membersResp = membersResp;
+      this.allMembers = membersResp;
       this.members = this.paginateMembers(membersResp);
     });
+  }
+
+  filterData() {
+    if (this.filters.global) {
+      this.members = [];
+
+      this.members = this.paginateMembers(this.allMembers.filter(member => String(Object.values(member)).includes(this.filters.global) ));
+    } else {
+      this.members = this.paginateMembers(this.allMembers);
+    }
   }
 
 }
