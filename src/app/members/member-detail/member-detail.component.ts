@@ -12,11 +12,13 @@ export class MemberDetailComponent implements OnInit {
 
   member;
   memberEnum = MemberEnum;
+  isLoading = true;
 
   constructor(private memberService: MemberService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.memberService.getMemberById(this.activatedRoute.snapshot.params.id).subscribe(memberResp => {
+      this.isLoading = false;
       this.member = memberResp;
     });
   }

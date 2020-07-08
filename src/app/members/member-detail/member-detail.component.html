@@ -1,3 +1,4 @@
+<div class="loader" *ngIf="isLoading"></div>
 <div class="member-detail container mt-3" *ngIf="member">
     <h2>Member: {{member.first_name}} {{member.last_name}} <button class="btn btn-info float-right" [routerLink]="'/'"><i class="fa fa-chevron-left"></i> Back</button></h2>
     <div class="row member-att" *ngFor="let memberAtt of member | keyvalue">

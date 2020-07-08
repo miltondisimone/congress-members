@@ -3,9 +3,6 @@ import { MemberService } from '../core/services/member.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Member } from '../core/models/member.model';
 import { MemberEnum } from '../utils/member-enum';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MemberDetailComponent } from './member-detail/member-detail.component';
-import _ from 'lodash';
 
 @Component({
   selector: 'app-members',
@@ -24,19 +21,25 @@ export class MembersComponent implements OnInit {
   members: any[];
   allMembers;
   filters: any = {};
+  isLoading = false;
+  showAdvancedFilters = false;
+  advancedFilter: string;
 
 
-  constructor(private memberService: MemberService, private modalService: NgbModal) { }
+  constructor(private memberService: MemberService) { }
 
   ngOnInit() {
     this.requestForm = new FormGroup({
       chamber: new FormControl(null),
-      congress: new FormControl(null)
+      congress: new FormControl('unselected')
     });
   }
 
+  toggleAdvancedFilters() {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
+  }
+
   paginateMembers(members: Member[]) {
-    console.log(members)
     this.collectionSize = members.length;
     return members
         .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
@@ -48,24 +51,43 @@ export class MembersComponent implements OnInit {
 
 
   selectChamber() {
+    this.members = [];
+    this.requestForm.get('congress').setValue('unselected');
     this.congressList = this.memberService.generateCongressNumberList(this.requestForm.get('chamber').value);
   }
 
   getMembers() {
     const congressNumber = this.requestForm.get('congress').value;
-    const chamber = this.requestForm.get('chamber').value;
+    if (congressNumber) {
+      this.isLoading = true;
+      const chamber = this.requestForm.get('chamber').value;
 
-    this.memberService.getCongressMembersByCongressAndChamber(congressNumber, chamber).subscribe(membersResp => {
-      this.allMembers = membersResp;
-      this.members = this.paginateMembers(membersResp);
-    });
+      this.memberService.getCongressMembersByCongressAndChamber(congressNumber, chamber).subscribe(membersResp => {
+        this.allMembers = membersResp;
+        this.members = this.paginateMembers(membersResp);
+        this.isLoading = false;
+      });
+    } else {
+      return;
+    }
+
   }
 
   filterData() {
-    if (this.filters.global) {
+    if (!this.members) {
+      return;
+    }
+    if (this.filters.advanced || this.filters.global) {
       this.members = [];
 
-      this.members = this.paginateMembers(this.allMembers.filter(member => String(Object.values(member)).includes(this.filters.global) ));
+      if (this.filters.advanced && this.showAdvancedFilters) {
+        this.members = this.paginateMembers(
+          this.allMembers.filter(member => String(member[this.advancedFilter]).includes(this.filters.advanced)
+        ));
+      } else {
+        this.members = this.paginateMembers(this.allMembers.filter(member => String(Object.values(member)).includes(this.filters.global) ));
+      }
+
 
 
     } else {

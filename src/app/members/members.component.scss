@@ -1,6 +1,23 @@
 .members {
     .table-wrapper {
         overflow-x: scroll;
+        /* width */
+        &::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
         .members-table {
             thead,
             tbody {
@@ -9,15 +26,24 @@
                     td {
                         min-width: 200px;
                         &:last-child {
-                            min-width: 100px;
                             background-color: white;
-                            width: 1%;
+                            min-width: 100px !important;
+                            width: 100px !important;
                             position: sticky;
                             top: 0;
                             right: 0;
+                            padding: 1rem;
                         }
                     }
                 }
+            }
+        }
+    }
+    .filters {
+        .advanced-filter {
+            cursor: pointer;
+            p {
+                margin-top: 2.3rem;
             }
         }
     }

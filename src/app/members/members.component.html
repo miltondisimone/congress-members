@@ -3,32 +3,53 @@
         <div class="form-group" class="col-6">
             <label for="chamber_field">Chamber</label>
             <select class="form-control" id="chamber_field" formControlName="chamber" name="chamber_field" (change)="selectChamber()">
+              <option [selected]="true" disabled>-- Select Chamber --</option>
               <option *ngFor="let chamb of chambers" [value]="chamb">{{ chamb | chambers }}</option>
             </select>
         </div>
         <div class="form-group" class="col-6">
             <label for="congress_field">Congress</label>
             <select class="form-control" id="congress_field" name="chamber_field" formControlName="congress" (change)="getMembers()">
+              <option [selected]="true" disabled [value]="'unselected'">-- Select Congress --</option>
               <option *ngFor="let congress of congressList">{{congress}}</option>
             </select>
         </div>
     </form>
 
     <div class="filters row">
-        <div class="form-group col-4">
+        <div class="form-group col-6">
             <label for="global_filter">Filter</label>
-            <input [(ngModel)]="filters.global" (input)="filterData()" type="text" class="form-control" id="global_filter" placeholder="">
+            <input [(ngModel)]="filters.global" (input)="filterData()" type="text" class="form-control" id="global_filter" placeholder="" [disabled]="showAdvancedFilters">
+        </div>
+        <div class="advanced-filter col-6" (click)="toggleAdvancedFilters()">
+            <p>
+                Advanced Filter
+                <i *ngIf="!showAdvancedFilters" class="fa fa-chevron-down"></i>
+                <i *ngIf="showAdvancedFilters" class="fa fa-chevron-up"></i>
+            </p>
+        </div>
+        <div class="form-group" class="col-6" *ngIf="showAdvancedFilters">
+            <label for="advanced_filter_field">Filter by</label>
+            <select class="form-control" id="advanced_filter_field" name="advanced_filter" [(ngModel)]="advancedFilter">
+            <option *ngFor="let memberAtt of memberEnum | keyvalue" [value]="memberAtt.key">{{memberEnum[memberAtt.key]}}</option>
+          </select>
+        </div>
+        <div class="form-group col-6" *ngIf="showAdvancedFilters">
+            <label for="global_filter">Filter</label>
+            <input [(ngModel)]="filters.advanced" (input)="filterData()" type="text" class="form-control" id="global_filter" placeholder="">
         </div>
     </div>
 
 
-    <div class="text-center mt-3 alert alert-info" *ngIf="!members">
+    <div class="text-center mt-3 alert alert-info" *ngIf="requestForm.get('congress').value === 'unselected'">
         <h3>Please, select Chamber and Congress</h3>
     </div>
 
-    <div class="table-wrapper" *ngIf="members">
+    <div class="loader" *ngIf="isLoading"></div>
+
+    <div class="table-wrapper" *ngIf="members && members.length && !isLoading">
         <!-- Members Table -->
-        <table class="table members-table mt-4">
+        <table class="table table-bordered table-striped members-table mt-4">
             <thead>
                 <tr>
                     <th *ngFor="let memberField of memberEnum | keyvalue" scope="col">
@@ -53,8 +74,14 @@
             </tbody>
         </table>
     </div>
-    <div class="d-flex justify-content-between p-2 container" *ngIf="members">
-        <ngb-pagination class="m-auto" [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChange()">
+
+    <div class="text-center" *ngIf="members && members.length === 0 && !isLoading && requestForm.get('congress').value !== 'unselected'">
+        <h2>
+            No results found
+        </h2>
+    </div>
+    <div class="d-flex justify-content-between p-2 container" *ngIf="members && members.length && !isLoading">
+        <ngb-pagination class="m-auto" [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChange()" [size]="'sm'">
         </ngb-pagination>
     </div>
 </div>
