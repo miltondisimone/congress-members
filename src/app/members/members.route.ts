@@ -10,7 +10,7 @@ const members: Routes = [
         component: MembersComponent,
     },
     {
-      path: 'detail',
+      path: 'detail/:id',
       component: MemberDetailComponent,
     },
 ];

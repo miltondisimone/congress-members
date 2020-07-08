@@ -16,7 +16,8 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
-    NgbModule
+    NgbModule,
+    RouterModule
   ],
   entryComponents: [MemberDetailComponent]
 })

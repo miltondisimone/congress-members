@@ -13,6 +13,21 @@ export class MemberService {
 
   }
 
+  getMemberById(memberId: string): Observable<any> {
+    const resourceUrl = `https://api.propublica.org/congress/v1/members/${memberId}.json`;
+
+    const options = {
+      headers: new HttpHeaders({
+        'X-API-KEY': 'qrAdSWomcf6yCNhnCY5HL9MpWMqDhRE4wYWeDrhG'
+      }),
+    };
+    console.log(memberId)
+
+    return this.http.get(resourceUrl, options).pipe(map( (resp: any) => {
+      return resp.results[0];
+    }));
+
+  }
 
   getCongressMembersByCongressAndChamber(congress: string, chamber: number): Observable<any> {
     const resourceUrl = `https://api.propublica.org/congress/v1/${congress}/${chamber}/members.json`;

@@ -22,8 +22,11 @@
     </div>
 
 
+    <div class="text-center mt-3 alert alert-info" *ngIf="!members">
+        <h3>Please, select Chamber and Congress</h3>
+    </div>
 
-    <div class="table-wrapper">
+    <div class="table-wrapper" *ngIf="members">
         <!-- Members Table -->
         <table class="table members-table mt-4">
             <thead>
@@ -41,7 +44,7 @@
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button type="button" class="btn btn-info btn-sm" (click)="openDetailsModal(member)">
+                            <button type="button" class="btn btn-info btn-sm" [routerLink]="['/detail', member.id]">
                                 <span class="d-none d-md-inline">Details</span>
                             </button>
                         </div>
@@ -50,7 +53,7 @@
             </tbody>
         </table>
     </div>
-    <div class="d-flex justify-content-between p-2 container">
+    <div class="d-flex justify-content-between p-2 container" *ngIf="members">
         <ngb-pagination class="m-auto" [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChange()">
         </ngb-pagination>
     </div>

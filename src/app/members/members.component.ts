@@ -21,7 +21,7 @@ export class MembersComponent implements OnInit {
   page = 1;
   pageSize = 7;
   collectionSize;
-  members: Member[];
+  members: any[];
   allMembers;
   filters: any = {};
 
@@ -33,11 +33,6 @@ export class MembersComponent implements OnInit {
       chamber: new FormControl(null),
       congress: new FormControl(null)
     });
-  }
-
-  openDetailsModal(member) {
-    const modalRef = this.modalService.open(MemberDetailComponent, {size: 'lg'});
-    modalRef.componentInstance.member = member;
   }
 
   paginateMembers(members: Member[]) {
@@ -71,6 +66,8 @@ export class MembersComponent implements OnInit {
       this.members = [];
 
       this.members = this.paginateMembers(this.allMembers.filter(member => String(Object.values(member)).includes(this.filters.global) ));
+
+
     } else {
       this.members = this.paginateMembers(this.allMembers);
     }
