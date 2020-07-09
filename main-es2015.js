@@ -504,7 +504,6 @@ let MemberService = class MemberService {
                 'X-API-KEY': 'qrAdSWomcf6yCNhnCY5HL9MpWMqDhRE4wYWeDrhG'
             }),
         };
-        console.log(memberId);
         return this.http.get(resourceUrl, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((resp) => {
             return resp.results[0];
         }));
@@ -527,7 +526,6 @@ let MemberService = class MemberService {
         for (let i = minCongressNumber; i <= 116; i++) {
             congressList = [...congressList, i];
         }
-        console.log(congressList);
         return congressList;
     }
 };

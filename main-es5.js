@@ -1041,7 +1041,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               'X-API-KEY': 'qrAdSWomcf6yCNhnCY5HL9MpWMqDhRE4wYWeDrhG'
             })
           };
-          console.log(memberId);
           return this.http.get(resourceUrl, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (resp) {
             return resp.results[0];
           }));
@@ -1070,7 +1069,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             congressList = [].concat(_toConsumableArray(congressList), [i]);
           }
 
-          console.log(congressList);
           return congressList;
         }
       }]);
