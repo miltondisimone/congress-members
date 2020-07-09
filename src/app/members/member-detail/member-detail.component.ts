@@ -20,6 +20,10 @@ export class MemberDetailComponent implements OnInit {
     this.memberService.getMemberById(this.activatedRoute.snapshot.params.id).subscribe(memberResp => {
       this.isLoading = false;
       this.member = memberResp;
+    },
+    (errors) => {
+      this.isLoading = false;
+      alert(errors);
     });
   }
 

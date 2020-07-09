@@ -62,10 +62,15 @@ export class MembersComponent implements OnInit {
       this.isLoading = true;
       const chamber = this.requestForm.get('chamber').value;
 
-      this.memberService.getCongressMembersByCongressAndChamber(congressNumber, chamber).subscribe(membersResp => {
+      this.memberService.getCongressMembersByCongressAndChamber(congressNumber, chamber)
+      .subscribe( (membersResp) => {
         this.allMembers = membersResp;
         this.members = this.paginateMembers(membersResp);
         this.isLoading = false;
+      },
+      (errors) => {
+        this.isLoading = false;
+        alert(errors);
       });
     } else {
       return;
