@@ -1,13 +1,13 @@
 <div class="members container">
     <form [formGroup]="requestForm" class="row">
-        <div class="form-group" class="col-6">
+        <div class="form-group" class="col-sm-12 col-md-6">
             <label for="chamber_field">Chamber</label>
             <select class="form-control" id="chamber_field" formControlName="chamber" name="chamber_field" (change)="selectChamber()">
               <option [selected]="true" disabled>-- Select Chamber --</option>
               <option *ngFor="let chamb of chambers" [value]="chamb">{{ chamb | chambers }}</option>
             </select>
         </div>
-        <div class="form-group" class="col-6">
+        <div class="form-group" class="col-sm-12 col-md-6">
             <label for="congress_field">Congress</label>
             <select class="form-control" id="congress_field" name="chamber_field" formControlName="congress" (change)="getMembers()">
               <option [selected]="true" disabled [value]="'unselected'">-- Select Congress --</option>
@@ -17,24 +17,24 @@
     </form>
 
     <div class="filters row">
-        <div class="form-group col-6">
+        <div class="form-group col-md-6">
             <label for="global_filter">Filter</label>
             <input [(ngModel)]="filters.global" (input)="filterData()" type="text" class="form-control" id="global_filter" placeholder="" [disabled]="showAdvancedFilters">
         </div>
-        <div class="advanced-filter col-6" (click)="toggleAdvancedFilters()">
+        <div class="advanced-filter col-md-6 col-sm-12" (click)="toggleAdvancedFilters()">
             <p>
                 Advanced Filter
                 <i *ngIf="!showAdvancedFilters" class="fa fa-chevron-down"></i>
                 <i *ngIf="showAdvancedFilters" class="fa fa-chevron-up"></i>
             </p>
         </div>
-        <div class="form-group" class="col-6" *ngIf="showAdvancedFilters">
+        <div class="form-group" class="col-md-6 col-sm-12" *ngIf="showAdvancedFilters">
             <label for="advanced_filter_field">Filter by</label>
             <select class="form-control" id="advanced_filter_field" name="advanced_filter" [(ngModel)]="advancedFilter">
             <option *ngFor="let memberAtt of memberEnum | keyvalue" [value]="memberAtt.key">{{memberEnum[memberAtt.key]}}</option>
           </select>
         </div>
-        <div class="form-group col-6" *ngIf="showAdvancedFilters">
+        <div class="form-group col-md-6 col-sm-12" *ngIf="showAdvancedFilters">
             <label for="global_filter">Filter</label>
             <input [(ngModel)]="filters.advanced" (input)="filterData()" type="text" class="form-control" id="global_filter" placeholder="">
         </div>
@@ -47,7 +47,7 @@
 
     <div class="loader" *ngIf="isLoading"></div>
 
-    <div class="table-wrapper" *ngIf="members && members.length && !isLoading">
+    <div class="table-wrapper table-responsive" *ngIf="members && members.length && !isLoading">
         <!-- Members Table -->
         <table class="table table-bordered table-striped members-table mt-4">
             <thead>
@@ -66,7 +66,7 @@
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="button" class="btn btn-info btn-sm" [routerLink]="['/detail', member.id]">
-                                <span class="d-none d-md-inline">Details</span>
+                                <span class="d-none d-sm-inline">Details</span>
                             </button>
                         </div>
                     </td>

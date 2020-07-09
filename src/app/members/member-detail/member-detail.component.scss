@@ -9,3 +9,12 @@
         }
     }
 }
+
+@media(max-width: 767px) {
+    .member-detail {
+        h2 {
+            font-size: 18px;
+        }
+        font-size: 14px;
+    }
+}
