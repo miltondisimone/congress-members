@@ -21,7 +21,6 @@ export class MemberService {
         'X-API-KEY': 'qrAdSWomcf6yCNhnCY5HL9MpWMqDhRE4wYWeDrhG'
       }),
     };
-    console.log(memberId)
 
     return this.http.get(resourceUrl, options).pipe(map( (resp: any) => {
       return resp.results[0];
@@ -51,8 +50,6 @@ export class MemberService {
     for (let i = minCongressNumber; i <= 116; i++) {
         congressList = [...congressList, i];
     }
-
-    console.log(congressList)
 
     return congressList;
   }
