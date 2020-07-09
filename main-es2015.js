@@ -588,6 +588,9 @@ let MemberDetailComponent = class MemberDetailComponent {
         this.memberService.getMemberById(this.activatedRoute.snapshot.params.id).subscribe(memberResp => {
             this.isLoading = false;
             this.member = memberResp;
+        }, (errors) => {
+            this.isLoading = false;
+            alert(errors);
         });
     }
 };
@@ -678,10 +681,14 @@ let MembersComponent = class MembersComponent {
         if (congressNumber) {
             this.isLoading = true;
             const chamber = this.requestForm.get('chamber').value;
-            this.memberService.getCongressMembersByCongressAndChamber(congressNumber, chamber).subscribe(membersResp => {
+            this.memberService.getCongressMembersByCongressAndChamber(congressNumber, chamber)
+                .subscribe((membersResp) => {
                 this.allMembers = membersResp;
                 this.members = this.paginateMembers(membersResp);
                 this.isLoading = false;
+            }, (errors) => {
+                this.isLoading = false;
+                alert(errors);
             });
         }
         else {

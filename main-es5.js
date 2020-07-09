@@ -1178,6 +1178,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.memberService.getMemberById(this.activatedRoute.snapshot.params.id).subscribe(function (memberResp) {
             _this.isLoading = false;
             _this.member = memberResp;
+          }, function (errors) {
+            _this.isLoading = false;
+            alert(errors);
           });
         }
       }]);
@@ -1334,6 +1337,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this2.allMembers = membersResp;
               _this2.members = _this2.paginateMembers(membersResp);
               _this2.isLoading = false;
+            }, function (errors) {
+              _this2.isLoading = false;
+              alert(errors);
             });
           } else {
             return;
